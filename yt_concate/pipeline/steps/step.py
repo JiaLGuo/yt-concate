@@ -8,7 +8,7 @@ class Step(ABC):
         pass
 
     @abstractmethod
-    def process(self, data, inputs): #input is dictinonary having many argument
+    def process(self, data, inputs, utils): #input is dictinonary having many argument
         pass
 
 
