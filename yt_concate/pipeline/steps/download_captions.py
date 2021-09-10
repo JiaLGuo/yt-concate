@@ -1,4 +1,3 @@
-import json
 import time
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import WebVTTFormatter
@@ -9,18 +8,18 @@ from .step import StepException
 class DownloadCaptions(Step):
     def process(self, data, inputs, utils):
         start = time.time()
-        for url in data:
-            print('downloading existing caption file', url)
-            if utils.caption_file_exists(url):
+        for yt in data:
+            print('downloading existing caption file', yt.url)
+            if utils.caption_file_exists(yt):
                 print('found existing caption file')
                 continue
 
             try:
-                video_id = utils.get_video_id_from_url(url)
+                video_id = yt.get_video_id_from_url(yt.url)
                 captions = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
                 formatter = WebVTTFormatter()
                 WebVTTFormattered = formatter.format_transcript(captions)
-                with open(utils.get_caption_filepath(url), 'w', encoding='utf-8') as vtt_file:
+                with open(yt.caption_filepath, 'w', encoding='utf-8') as vtt_file:
                     vtt_file.write(WebVTTFormattered)
 
             # except (KeyError, AttributeError):
@@ -28,10 +27,9 @@ class DownloadCaptions(Step):
                 print('Error when downloading caption for', e)
                 continue
 
-
-
         end = time.time()
         print('took', end - start)
+        return data
 
 # #self define json format
 # class DownloadCaptions(Step):
