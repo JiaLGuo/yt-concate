@@ -31,6 +31,7 @@ class DownloadVideos(Step):
                 print('downloading', url)
                 with YoutubeDL(ydl_opts) as ydl:
                     ydl.download([url])
+                print('Finished download ', yt.video_filepath)
             # except YoutubeDL.report_error(ydl_opts, 'ERROR:'):
             except Exception as e:
                 print('Error when downloading video for', e)

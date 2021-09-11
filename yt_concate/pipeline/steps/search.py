@@ -16,5 +16,5 @@ class Search(Step):
                     time = captions[caption]
                     f = Found(yt, caption, time)
                     found.append(f)
-            print('\n', 'Found:', yt, yt.captions)
+            # print('\n', 'Found:', yt, yt.captions)
         return found
